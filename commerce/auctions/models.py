@@ -1,11 +1,18 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.exceptions import ValidationError
 #) #%-> means I am nearly sure
 #) #%&&-> means I am doubtful or wrong  
 
 class User(AbstractUser):
     pass
 
+class Category(models.Model):
+    category_name=models.CharField(max_length=50,unique=True)
+    def __str__(self):
+        return f"{self.id} : {self.category}"    
 
 class AuctionList(models.Model):
     product_name=models.CharField(max_length=64)
@@ -16,23 +23,25 @@ class AuctionList(models.Model):
     product_description=models.CharField(max_length=100,default=None)
     product_user_created=models.BooleanField(default=False)
     product_quantity=models.SmallIntegerField(default=1)
-    product_watchlisted_on=models.ForeignKey(User,blank=True,on_delete=models.CASCADE,name="on_watchlists")
-    product_category=models.CharField()
+    product_watchlisted_on=models.ManyToManyField(User,blank=True,name="watchlist")
+    product_category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="auctions_category")
 
 
  
     def __str__(self):
-        return f"({self.id} : [{self.product_name}] : {self.product_date_joined} : {self.product_bid_closing_time} : {self.product_price} : [User created :]{self.product_user_created})"
-    
+        return f"({self.id} : [{self.product_name}] : {self.product_date_joined} : {self.product_bid_closing_time} : {self.product_price} : [User created :]{self.product_user_created})"    
 
 class Profile(models.Model):
-    user_associated=models.OneToOneField(User,on_delete=models.CASCADE,related_name="user_associated")
-    user_watchlist=models.ForeignKey(AuctionList,blank=True,on_delete=models.CASCADE,related_name="users_watchlist")
-    user_profile_pic=models.ImageField(upload_to="ProfilePics/",blank=True,null=True,on_delete=models.CASCADE)
-    user_phone_number=models.BigIntegerField(default="")
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="profile")
+    user_profile_pic=models.ImageField(upload_to="ProfilePics/",blank=True,null=True)
+    user_phone_number=models.CharField(max_length=15)
     
-
+class WatchList(models.Model):
+    watchlist=models.ForeignKey(User,on_delete=models.CASCADE,related_name="watchlist")
+    product=models.ForeignKey(AuctionList,on_delete=models.CASCADE,related_name="user_watchlist")
+    quantity=models.IntegerField()
 # For User
+
 class Bids(models.Model):   
     auction=models.ForeignKey(AuctionList,on_delete=models.CASCADE,related_name="product")
     bidder=models.ManyToManyField(User,blank=True,related_name="bidder")
@@ -46,7 +55,20 @@ class Bids(models.Model):
         ]
     def __str__(self):
         return f"( {self.auction} : {self.bidder} : {self.bid_product_quantity} : {self.bid_price} )"
-    
+
+
+@receiver(post_save, sender=Bids)
+def check_unique_bid(sender, instance, created, **kwargs):
+    if created:
+        auction = instance.auction
+        bidder = instance.bidder
+        existing_bid = Bids.objects.filter(auction=auction, bidder=bidder).exclude(pk=instance.pk).exists()
+        if existing_bid:
+            raise ValidationError('A user can only have one bid per auction.')
+
+
+
+
 class WinningBid(models.Model):    
     winning_bidder=models.OneToOneField(User,on_delete=models.CASCADE,related_name="winning_bidder")
     winning_product=models.OneToOneField(AuctionList,on_delete=models.CASCADE,related_name="winning_product")
