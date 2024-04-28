@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+    <h2>Active Listings</h2>
+    {% if tag %}
+        <h3>{{tag}}</h3>
+    {% endif %}
+     
+    {% if form %}
+       <form action="{% url 'add_create_listing' %}" method="POST">
+        {% csrf_token %}
+            {{form}}
+        <input type="submit">
+       </form>
+    {% endif %}
+
+    <div class="object-container">
+        <div class="object-body">
+            {% for object in objects %}
+                <a href="{% url 'product_details' object.id %}">
+                    <div class="object-image">
+                        <img src="{{ object.product_image.url }}" alt="{{object.product_name}}">     
+                    </div>
+                </a>
+                <br>
+                <h3>{{ object.product_image.url }}</h3>
+                <h5 class="object-inner-heading">NAME : [ {{object.product_name}} ]</h5><br>
+                <h5 class="object-inner-price">PRICE : {{object.product_price}} $$</h5><br>
+            
+            {% endfor %}
+
+        </div>
+
+    </div>
+{% endblock %}

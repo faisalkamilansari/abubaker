@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <div>
+    <a href="{% url 'image' details.id %}">
+        <img src="{{ details.product_image.url }}" alt="{{ details.product_name }}">
+    </a>
+    <h5>ID: {{ details.id }}</h5>
+    <h5>NAME: {{ details.product_name }}</h5>
+    <h6>PRICE: {{ details.product_price }}$$</h6>
+    </div>
+    <div>
+        # error is in this section
+        <form action="{% url 'add_to_watch_list' details.id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Add To WatchList">
+        </form> 
+             <br><br>
+        <form>
+            <input type="text" placeholder="Palace your comment here Comment"> <br><br>
+            <input type="submit" value="BID">
+        </form>
+        
+    </div>
+
+{% endblock %}
