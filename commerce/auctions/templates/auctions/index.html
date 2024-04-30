@@ -1,9 +1,11 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
-    <div id="header">
-        <h2>Active Listings</h2>
-    </div>
+    <header>
+        <div class="navbar-3">
+            <h2>Active Listings</h2>
+        </div>
+    </header>
     
     {% if tag %}
     <div id="tag">
@@ -28,7 +30,7 @@
                     <div class="object-image">
                         <img src="{{ object.product_image.url }}" alt="{{object.product_name}}">     
                     </div>
-                </a>
+                
                 <br>
                 <br>
                 <br>
@@ -43,6 +45,7 @@
                 </ul>
             
             
+            </a>
 
         </div>
         {% endfor %}

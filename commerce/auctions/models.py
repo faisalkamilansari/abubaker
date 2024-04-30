@@ -23,8 +23,8 @@ class AuctionList(models.Model):
     product_description=models.CharField(max_length=100,default=None)
     product_user_created=models.BooleanField(default=False)
     product_quantity=models.SmallIntegerField(default=1)
-    product_watchlisted_on=models.ManyToManyField(User,blank=True,name="watchlist")
-    product_category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="auctions_category")
+    product_watchlisted_on=models.ManyToManyField(User,blank=True,name="watchlist")   ##
+    product_category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="auctions_category")  #@
 
 
  
