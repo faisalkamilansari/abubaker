@@ -63,7 +63,8 @@ def AddCreateListing(request):
         product_date_joined=request.POST["product_date_joined"]
         product_bid_closing_time=request.POST["product_bid_closing_time"]
         product_description=request.POST["product_description"]
-        f=AuctionList(product_name=product_name,product_image=product_image,product_price=product_price,product_date_joined=product_date_joined,product_bid_closing_time=product_bid_closing_time,product_description=product_description,product_user_created=True)
+        product_category=request.POST["product_category"]
+        f=AuctionList(product_name=product_name,product_image=product_image,product_price=product_price,product_date_joined=product_date_joined,product_bid_closing_time=product_bid_closing_time,product_description=product_description,product_user_created=True,product_category=product_category)
         f.save()
         product=AuctionList.objects.get(pk=f.id)
         return HttpResponseRedirect(reverse('product_details',args=[product.id]))

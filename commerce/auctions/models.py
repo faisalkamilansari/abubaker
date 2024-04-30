@@ -12,7 +12,7 @@ class User(AbstractUser):
 class Category(models.Model):
     category_name=models.CharField(max_length=50,unique=True)
     def __str__(self):
-        return f"{self.id} : {self.category}"    
+        return f"{self.id} : {self.category_name}"    
 
 class AuctionList(models.Model):
     product_name=models.CharField(max_length=64)
@@ -37,8 +37,9 @@ class Profile(models.Model):
     user_phone_number=models.CharField(max_length=15)
     
 class WatchList(models.Model):
-    watchlist=models.ForeignKey(User,on_delete=models.CASCADE,related_name="watchlist")
+    watchlist=models.OneToOneField(User,on_delete=models.CASCADE,related_name="watchlist")
     product=models.ForeignKey(AuctionList,on_delete=models.CASCADE,related_name="user_watchlist")
+    #for products ManyToManyField
     quantity=models.IntegerField()
 # For User
 
@@ -48,11 +49,18 @@ class Bids(models.Model):
     bid_product_quantity=models.IntegerField(default=1)
     bid_price=models.DecimalField(max_digits=10,decimal_places=2)
 
-    
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['auction', 'bidder'], name='unique_bid_per_user'),
-        ]
+    def clean(self):
+        existing_bids = Bids.objects.filter(auction=self.auction, bidder__in=self.bidder.all()).exclude(pk=self.pk)
+        if existing_bids.exists():
+            raise ValidationError('A user can only have one bid per auction.')
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(fields=['auction', 'bidder'], name='unique_bid_per_user'),
+    #     ]
     def __str__(self):
         return f"( {self.auction} : {self.bidder} : {self.bid_product_quantity} : {self.bid_price} )"
 

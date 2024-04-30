@@ -1,9 +1,15 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
-    <h2>Active Listings</h2>
+    <div id="header">
+        <h2>Active Listings</h2>
+    </div>
+    
     {% if tag %}
+    <div id="tag">
         <h3>{{tag}}</h3>
+    </div>
+        
     {% endif %}
      
     {% if form %}
@@ -15,21 +21,31 @@
     {% endif %}
 
     <div class="object-container">
+        {% for object in objects %}
         <div class="object-body">
-            {% for object in objects %}
+           
                 <a href="{% url 'product_details' object.id %}">
                     <div class="object-image">
                         <img src="{{ object.product_image.url }}" alt="{{object.product_name}}">     
                     </div>
                 </a>
                 <br>
-                <h3>{{ object.product_image.url }}</h3>
-                <h5 class="object-inner-heading">NAME : [ {{object.product_name}} ]</h5><br>
-                <h5 class="object-inner-price">PRICE : {{object.product_price}} $$</h5><br>
+                <br>
+                <br>
+                <!-- <h3>{{ object.product_image.url }}</h3> -->
+                <ul>
+                    <li><h5>{{ object.product_name }}</h5></li>
+                    <li><h6 style="display : inline">PRICE:</h6><span style="display : inline">{{ object.product_price }}$$</span></li>
+                    <li>{{object.product_description}}</li>
+                
+                
+                
+                </ul>
             
-            {% endfor %}
+            
 
         </div>
+        {% endfor %}
 
     </div>
 {% endblock %}

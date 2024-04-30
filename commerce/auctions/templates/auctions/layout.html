@@ -6,16 +6,17 @@
         <title>{% block title %}Auctions{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
-    </head>
+    </head> 
     <body>
-        <h1>Auctions</h1>
-        <div>
-            {% if user.is_authenticated %}
+        
+        <header>
+            <h1>Auctions</h1>
+            <!-- {% if user.is_authenticated %}
                 Signed in as <strong>{{ user.username }}</strong>.
             {% else %}
                 Not signed in.
-            {% endif %}
-        </div>
+            {% endif %} -->
+        </header>
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
@@ -36,6 +37,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 </li>
+                <li class="nav-item 2"><button id="profile-button"><h5>{{user.username}}</h5></button></li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>
@@ -43,10 +45,34 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Register</a>
                 </li>
+                <div id="header-gap">
+
+                </div> 
+
+                <li class="nav-item 2"><button id="profile-button"><h5>Not SignIn</h5></button></li>
             {% endif %}
-        </ul>
-        <hr>
+           
+            <!-- <li class="nav-item">
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username }}</strong>.
+            {% else %}
+                Not signed in.
+            {% endif %}
+            </li> -->
+            </ul>
+      
+            
+        </div>
         {% block body %}
         {% endblock %}
+
+        <footer>
+            <div class="container">
+              <p>This is the footer of your webpage.</p>
+              <p>Contact us at: example@email.com</p>
+            </div>
+        </footer>
+          
     </body>
 </html>
+
