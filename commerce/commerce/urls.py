@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-admin.site.site_header="Admin Panel"
+admin.site.site_header="Faisal Panel"
 admin_panel="admin"
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
