@@ -31,12 +31,16 @@ body {
     background-color:hwb(160 77% 5%);
     margin-bottom:0;
   }
+
   /* #active{
     color:#ffffff;
     background-color:#232F3E ;
     margin:0;
   } */
-
+  #tag>h3{
+    color:#ffffff;
+    
+  }
   header{
     font-family: sans-serif;
     color:#ffffff;
