@@ -15,6 +15,13 @@ class Category(models.Model):
         return f"{self.id} : {self.category_name}"    
 
 class AuctionList(models.Model):
+    CHOICES=[
+        ("Mg","Magical"),
+        ("Ec","Electronics"),
+        ("Cl","Clothing"),
+        ("Fs","Fashion"),
+        ("Sp","Sports")
+    ]
     product_name=models.CharField(max_length=64)
     product_image=models.ImageField(upload_to='Images/')
     product_price=models.DecimalField(max_digits=5,decimal_places=2)
@@ -24,7 +31,7 @@ class AuctionList(models.Model):
     product_user_created=models.BooleanField(default=False)
     product_quantity=models.SmallIntegerField(default=1)
     product_watchlisted_on=models.ManyToManyField(User,blank=True,name="watchlist")   ##
-    product_category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="auctions_category")  #@
+    product_category=models.CharField(max_length=3,choices=CHOICES)  #@
 
 
  
@@ -38,9 +45,7 @@ class Profile(models.Model):
     
 class WatchList(models.Model):
     watchlist=models.OneToOneField(User,on_delete=models.CASCADE,related_name="watchlist")
-    product=models.ForeignKey(AuctionList,on_delete=models.CASCADE,related_name="user_watchlist")
-    #for products ManyToManyField
-    quantity=models.IntegerField()
+    product=models.ManyToManyField(AuctionList,blank=True,related_name="user_watchlist")
 # For User
 
 class Bids(models.Model):   
