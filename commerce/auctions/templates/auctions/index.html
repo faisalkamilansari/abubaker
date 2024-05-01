@@ -1,17 +1,18 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
-    <header>
-        <div class="navbar-3">
-            <h2>Active Listings</h2>
-        </div>
-    </header>
+    
     
     {% if tag %}
     <div id="tag">
         <h3>{{tag}}</h3>
     </div>
-        
+    {% else %}
+    <header>
+        <div class="navbar-3">
+            <h2>Active Listings</h2>
+        </div>
+    </header>    
     {% endif %}
      
     {% if form %}
@@ -51,4 +52,5 @@
         {% endfor %}
 
     </div>
+
 {% endblock %}
