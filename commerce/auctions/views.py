@@ -35,7 +35,7 @@ def image(request,product_id):
 def Categories(request):
     return render(request,"auctions/index.html",{
         "tag":"Categories",
-        "objects": AuctionList.objects.filter()
+        "objects":""
     })
     
 

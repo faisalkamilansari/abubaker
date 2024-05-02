@@ -10,11 +10,14 @@ body {
     background-color:hwb(160 77% 5%);
   }
   footer{
-    /* background-color: rgba(128, 128, 128, 0.477); */
+    background-color: rgba(128, 128, 128, 0.477);
+    height:200px;
+    width:auto;
     color:#ffffff;
     margin:0;
     
   }
+ 
   
   h2, h3, h5, h6 {
     margin: 1rem 0;
@@ -22,15 +25,26 @@ body {
   .navbar{
     background-color: rgba(128, 128, 128, 0.507);
     color:rgba(7, 0, 0, 0.641);
-  }
+  } 
   .navbar2{
     background-color:rgba(128, 128, 128, 0.277);
+  }
+  .navbar2 li{
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
   .navbar-3>h2{
     margin:0;
     background-color:hwb(160 77% 5%);
     margin-bottom:0;
   }
+  .nav{
+    display: flex;
+    justify-content: space-around;
+   
+  }
+
+
 
   /* #active{
     color:#ffffff;
@@ -45,11 +59,7 @@ body {
     font-family: sans-serif;
     color:#ffffff;
   }
-  .nav{
-    display:flex;
-    align-items: center;
-    /* border-bottom: 5px solid white; */
-  }
+  
   .nav-item .nav-link{
     color:#ffffff;
     background-color: #cccccc00;
@@ -61,22 +71,24 @@ body {
   .nav-link:hover{
     color:rgb(192, 179, 179);
   }
+  
   #profile-button{
     background-color: rgb(5, 179, 5);
-    border-radius: 8px;
-    border:none;
+    border-radius: 6px;
+    outline-style: none;
     color:#fff;
-    width:150px;
+    width:auto;
     height:40px;
-    margin-top: 4px;;
-    margin-bottom:none;
+    margin-top: 2px;
+    margin-bottom:2px;
     display:flex;
     align-items: center;
     text-align: center;
 
+
   }
   #profile-button:hover{
-    background-color:rgba(4, 112, 4, 0.696) ;
+    background-color:rgba(4, 112, 4, 0.696);
   }
   
 
@@ -95,6 +107,10 @@ body {
   }
   
   /* Object container styles */
+  #sample_hero{
+    /* height:400px; */
+    background-image:url("https://cdn.vectorstock.com/i/1000x1000/35/40/set-logos-for-bidding-and-auctions-vector-26973540.webp");
+  }
   .object-container {
     margin-top: 0;
     background-color: rgb(196, 242, 227);
@@ -102,9 +118,10 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 1rem 0;
+    height:auto;
   }
   
-  .object-container>.object-body {
+  .object-container .object-body {
   
     background-color: #fff;
     border-radius: 4px;
@@ -114,6 +131,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+
   }
   .object-body:hover{
     border: 1px solid #ccc; /* Add a border */

@@ -8,6 +8,7 @@
         <h3>{{tag}}</h3>
     </div>
     {% else %}
+    <br>
     <header>
         <div class="navbar-3">
             <h2>Active Listings</h2>
@@ -24,6 +25,7 @@
     {% endif %}
 
     <div class="object-container">
+        {% if objects %}
         {% for object in objects %}
         <div class="object-body">
            
@@ -50,6 +52,11 @@
 
         </div>
         {% endfor %}
+        {% else %}
+        <div id="sample_hero">
+            <img src="https://cdn.vectorstock.com/i/1000x1000/35/40/set-logos-for-bidding-and-auctions-vector-26973540.webp">
+        </div>
+        {% endif %}
 
     </div>
 
